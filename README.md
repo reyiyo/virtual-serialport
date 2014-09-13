@@ -35,10 +35,10 @@ if (process.env.NODE_ENV == 'testing') {
   sp.on('dataFromSerial', function(data) {
     console.log("data sent to virtual arduino: ", data);
   }
-  //sends random ints to computer
+  //sends random ints to computer every second
   setInterval(function(){
     sp.emit('data', Math.floor(Math.random() * 256));
-  }
+  }, 1000);
 }
 //then use sp as you would with an actual SerialPort
 
