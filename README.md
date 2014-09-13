@@ -1,5 +1,5 @@
 #virtualserialport
-Do you use [node-serialport](https://github.com/voodootikigod/node-serialport), but don't have your device connected for testing?
+Do you use [node-serialport](https://github.com/voodootikigod/node-serialport), but don't have your device connected for development or testing?
 
 virtualserialport provides a virtual drop-in replacement for an actual SerialPort object.
 
@@ -7,7 +7,7 @@ virtualserialport provides a virtual drop-in replacement for an actual SerialPor
 ```javascript
 var SerialPort = require('node-serialport').SerialPort;
 
-if (process.env.NODE_ENV == 'testing') {
+if (process.env.NODE_ENV == 'development') {
   SerialPort = require('virtualserialport');
 }
 
@@ -22,7 +22,7 @@ sp.on('open', function (err) {
 ```javascript
 var SerialPort = require('node-serialport').SerialPort;
 
-if (process.env.NODE_ENV == 'testing') {
+if (process.env.NODE_ENV == 'development') {
   SerialPort = require('virtualserialport');
 }
 
@@ -31,7 +31,7 @@ var sp = new SerialPort('/dev/ttyUSB0', { baudrate: 57600 });
 
 //Here we specify the functionality of the virtual device behind the serialport:
 //Lets pretend it's an Arduino...
-if (process.env.NODE_ENV == 'testing') {
+if (process.env.NODE_ENV == 'development') {
   //prints data it receives from the computer
   sp.on('dataFromSerial', function(data) {
     console.log("data sent to virtual arduino: ", data);
