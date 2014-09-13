@@ -29,7 +29,7 @@ if (process.env.NODE_ENV == 'testing') {
 var sp = new SerialPort('/dev/ttyUSB0', { baudrate: 57600 });
 
 
-//Here we specify the functionality of the fake arduino
+//Here we specify the functionality of the virtual device behind the virtual serialport:
 if (process.env.NODE_ENV == 'testing') {
   //prints data it receives from the computer
   sp.on('dataFromSerial', function(data) {
