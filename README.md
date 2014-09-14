@@ -59,7 +59,7 @@ sp.on('open', function(err) {
 var VirtualSerialPort = require('virtual-serialport');
 ```
 
-####vsp = new VirtualSerialPort(path,[opts={}]);
+####vsp = new VirtualSerialPort(path, [opts={}]);
 instantiates a virtual SerialPort object. Currently does nothing with the parameters.
 
 Work with `vsp` the same way you would with a SerialPort instance:
@@ -73,7 +73,7 @@ vsp.write("Hello World!");
 
 
   
-</br>
+<br><br><br>
 ##todo
 - move to automated testing (assertions and more)
 - better match voodootikigod's node-serialport api
