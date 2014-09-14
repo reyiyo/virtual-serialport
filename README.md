@@ -3,7 +3,7 @@ Do you use [node-serialport](https://github.com/voodootikigod/node-serialport), 
 
 virtual-serialport provides a virtual drop-in replacement for an actual SerialPort object.
 
-###examples
+##examples
 ```javascript
 var SerialPort = require('node-serialport').SerialPort;
 
@@ -20,6 +20,8 @@ sp.on('open', function (err) {
 
 ####want your virtual serial port to do something?
 ```javascript
+/** Same code as before
+
 var SerialPort = require('node-serialport').SerialPort;
 
 if (process.env.NODE_ENV == 'development') {
@@ -28,6 +30,7 @@ if (process.env.NODE_ENV == 'development') {
 
 var sp = new SerialPort('/dev/ttyUSB0', { baudrate: 57600 });
 
+**/
 
 //Here we specify the functionality of the virtual device behind the serialport:
 //Lets pretend it's an Arduino...
@@ -41,17 +44,36 @@ if (process.env.NODE_ENV == 'development') {
     sp.emit('data', Math.floor(Math.random() * 256));
   }, 1000);
 }
+
+/**
 //then use sp as you would with an actual SerialPort
 
 sp.on('open', function(err) {
   ...
+  
+**/
 ```
 
-###usage
+##usage
+```javascript
+var VirtualSerialPort = require('virtual-serialport');
+```
+
+####vsp = new VirtualSerialPort(path,[opts={}]);
+instantiates a virtual SerialPort object. Currently does nothing with the parameters.
+
+Work with `vsp` the same way you would with a SerialPort instance:
+```javascript
+vsp.on('data', function(data) {
+  ...
+});
+
+vsp.write("Hello World!");
+```
 
 
   
-
-###todo
+</br>
+##todo
 - move to automated testing (assertions and more)
 - better match voodootikigod's node-serialport api
