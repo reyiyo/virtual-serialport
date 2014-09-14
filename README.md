@@ -3,6 +3,7 @@ Do you use [node-serialport](https://github.com/voodootikigod/node-serialport), 
 
 virtual-serialport provides a virtual drop-in replacement for an actual SerialPort object.
 
+<br><br><br>
 ##examples
 ```javascript
 var SerialPort = require('node-serialport').SerialPort;
@@ -53,6 +54,7 @@ sp.on('open', function(err) {
   
 **/
 ```
+<br><br><br>
 
 ##usage
 ```javascript
