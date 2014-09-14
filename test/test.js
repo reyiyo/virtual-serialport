@@ -3,7 +3,7 @@ var VirtualSerialPort = require('../');
 var sp = new VirtualSerialPort('/dev/null');
 
 // Simple echo function for fake Arduino
-sp.on('dataFromSerial', function(buf) {
+sp.on('dataToArduino', function(buf) {
 	sp.emit('data', buf);
 });
 

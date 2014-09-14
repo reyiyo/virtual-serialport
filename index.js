@@ -9,7 +9,7 @@ var VirtualSerialPort = function(path, options){
 
 
 	this.write = function(buf){
-		if (open) self.emit("dataFromSerial", buf);
+		if (open) self.emit("dataToArduino", buf);
 	};
 
 	setTimeout(function(){
