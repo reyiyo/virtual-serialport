@@ -1,81 +1,91 @@
-#virtual-serialport
+# virtual-serialport
 Do you use [node-serialport](https://github.com/voodootikigod/node-serialport), but don't have your device connected for development or testing?
 
 virtual-serialport provides a virtual drop-in replacement for an actual SerialPort object.
 
 <br><br><br>
-##examples
+## examples
 ```javascript
 var SerialPort = require('node-serialport').SerialPort;
-
 if (process.env.NODE_ENV == 'development') {
   SerialPort = require('virtual-serialport');
 }
 
-var sp = new SerialPort('/dev/ttyUSB0', { baudrate: 57600 }); // still works if testing!
+var sp = new SerialPort('/dev/ttyUSB0', { baudrate: 57600 }); // still works if NODE_ENV is set to development!
 
-//then use sp as you would with an actual SerialPort
 sp.on('open', function (err) {
-  ...
-```
+  sp.on("data", function(data) {
+    console.log("From Arduino: " + data);
+  });
 
-####want your virtual serial port to do something?
-```javascript
-/** Same code as before
 
-var SerialPort = require('node-serialport').SerialPort;
-
-if (process.env.NODE_ENV == 'development') {
-  SerialPort = require('virtual-serialport');
-}
-
-var sp = new SerialPort('/dev/ttyUSB0', { baudrate: 57600 });
-
-**/
-
-//Here we specify the functionality of the virtual device behind the serialport:
-//Lets pretend it's an Arduino...
-if (process.env.NODE_ENV == 'development') {
-  //prints data it receives from the computer
-  sp.on('dataFromSerial', function(data) {
-    console.log("data sent to virtual arduino: ", data);
+  if (process.env.NODE_ENV == 'development') {
+    sp.on("dataToDevice", function(data) {
+      sp.writeToComputer(data + " " + data + "!");
+    });
   }
-  //sends random ints to computer every second
-  setInterval(function(){
-    sp.emit('data', Math.floor(Math.random() * 256));
-  }, 1000);
+
+  sp.write("BLOOP"); // "From Arduino: BLOOP BLOOP!"
 }
-
-/**
-//then use sp as you would with an actual SerialPort
-
-sp.on('open', function(err) {
-  ...
-  
-**/
 ```
+
 <br><br><br>
 
-##usage
+## usage
 ```javascript
 var VirtualSerialPort = require('virtual-serialport');
 ```
 
-####vsp = new VirtualSerialPort(path, [opts={}]);
+#### sp = new VirtualSerialPort(path, [opts={}])
 instantiates a virtual SerialPort object. Currently does nothing with the parameters.
 
-Work with `vsp` the same way you would with a SerialPort instance:
 ```javascript
-vsp.on('data', function(data) {
-  ...
-});
-
-vsp.write("Hello World!");
+sp = new VirtualSerialPort("/dev/ttyUSB0");
+// No device has to actually exist at /dev/ttyUSB0 :)
 ```
 
+### computer-to-device communication
 
-  
+```javascript
+sp.on("data", function(data) {
+	console.log("Computer says, " + data);
+});
+
+sp.writeToComputer("BLEEP!"); // "Computer says, BLEEP!"
+```
+
+### device-to-computer communication
+
+```javascript
+sp.on("dataToDevice", function(data) {
+	console.log("Arduino says, " + data):
+});
+
+sp.write("BLOOP!"); // "Arduino says, BLOOP!"
+```
+
+### node-serialport methods/events:
+#### sp.write(data)
+Writes data to the virtual device.
+Equivalent to `sp.emit("dataToDevice", data)`.
+
+### sp.on("open", function(err) { ... } )
+Runs function once SerialPort is ready, as you would with an actual SerialPort instance.
+
+
+### sp.on("data", function(data) { ... })
+Act on data sent to the computer, as you would with an actual SerialPort instance.
+
+### non node-serialport methods/events:
+#### sp.writeToComputer(data);
+Writes data to computer.
+Equivalent to `sp.emit("data", data)`
+
+
+#### sp.on("dataToDevice", function(data) { ... })
+Act on data sent to the device.
+
 <br><br><br>
-##todo
+## todo
 - move to automated testing (assertions and more)
 - better match voodootikigod's node-serialport api

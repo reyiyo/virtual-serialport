@@ -3,20 +3,19 @@ var VirtualSerialPort = require('../');
 var sp = new VirtualSerialPort('/dev/null');
 
 // Simple echo function for fake Arduino
-sp.on('dataToArduino', function(buf) {
-	sp.emit('data', buf);
+sp.on('dataToDevice', function(data) {
+	console.log("Arduino: " + (data == 1 ? "BLEEP" : "BLOOP"));
+	sp.writeToComputer(data^1);
 });
 
 sp.on('open', function() {
 	console.log("Initialized virtual serial port!");
-	//sends a random number every second
+
 	setInterval(function() {
-		var data = new Buffer([Math.random() * 256])
-		console.log("Sent to virtual arduino:", data);
-		sp.write(data);
+		sp.write(Math.floor(Math.random() * 2));
 	}, 1000);
 
 	sp.on("data", function(data) {
-		console.log('Received from virtual arduino:', data);
+		console.log("Computer: " + (data == 1 ? "BLEEP" : "BLOOP"));
 	});
 });

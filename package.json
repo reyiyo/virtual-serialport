@@ -1,6 +1,6 @@
 {
   "name": "virtual-serialport",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "A drop-in virtual replacement for node-serialport's SerialPort object",
   "main": "index.js",
   "directories": {
@@ -17,6 +17,7 @@
     "arduino",
     "serial",
     "testing",
+    "robotics",
     "serialport"
   ],
   "author": "Sean Lee <freshdried@gmail.com> (http://sean.lee.mx/)",
