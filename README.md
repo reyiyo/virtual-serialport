@@ -44,6 +44,7 @@ sp = new VirtualSerialPort("/dev/ttyUSB0");
 // No device has to actually exist at /dev/ttyUSB0 :)
 ```
 
+<br><br><br>
 ### computer-to-device communication
 
 ```javascript
@@ -64,6 +65,7 @@ sp.on("dataToDevice", function(data) {
 sp.write("BLOOP!"); // "Arduino says, BLOOP!"
 ```
 
+<br><br><br>
 ### node-serialport methods/events:
 #### sp.write(data)
 Writes data to the virtual device.
@@ -76,6 +78,7 @@ Runs function once SerialPort is ready, as you would with an actual SerialPort i
 ### sp.on("data", function(data) { ... })
 Act on data sent to the computer, as you would with an actual SerialPort instance.
 
+<br><br><br>
 ### non node-serialport methods/events:
 #### sp.writeToComputer(data);
 Writes data to computer.
