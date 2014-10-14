@@ -71,11 +71,11 @@ sp.write("BLOOP!"); // "Arduino says, BLOOP!"
 Writes data to the virtual device.
 Equivalent to `sp.emit("dataToDevice", data)`.
 
-### sp.on("open", function(err) { ... } )
+#### sp.on("open", function(err) { ... } )
 Runs function once SerialPort is ready, as you would with an actual SerialPort instance.
 
 
-### sp.on("data", function(data) { ... })
+#### sp.on("data", function(data) { ... })
 Act on data sent to the computer, as you would with an actual SerialPort instance.
 
 <br><br><br>
