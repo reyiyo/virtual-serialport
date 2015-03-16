@@ -7,11 +7,6 @@ var VirtualSerialPort = function(path, options){
 	var self = this;
 	var open = false;
 
-
-	this.write = function(data) {
-		if (open) self.emit("dataToDevice", data);
-	};
-
 	this.writeToComputer = function(data) {
 		self.emit("data", data);
 	};
@@ -23,5 +18,9 @@ var VirtualSerialPort = function(path, options){
 };
 
 util.inherits(VirtualSerialPort, events.EventEmitter);
+
+VirtualSerialPort.prototype.write = function write(buffer, callback) {
+    if (this.open) this.emit("dataToDevice", buffer);
+};
 
 module.exports = VirtualSerialPort;
