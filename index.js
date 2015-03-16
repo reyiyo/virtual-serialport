@@ -20,7 +20,8 @@ var VirtualSerialPort = function(path, options){
 		open = true;
 		self.emit("open");
 	}, 100);
-}
+};
+
 util.inherits(VirtualSerialPort, events.EventEmitter);
 
 module.exports = VirtualSerialPort;
