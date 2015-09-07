@@ -1,0 +1,32 @@
+{
+  "name": "virtual-serialport",
+  "version": "0.1.1",
+  "description": "A drop-in virtual replacement for node-serialport's SerialPort object",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/refactory-ar/virtual-serialport"
+  },
+  "keywords": [
+    "arduino",
+    "serial",
+    "testing",
+    "robotics",
+    "serialport"
+  ],
+  "author": {
+    "name": "Sean Lee",
+    "email": "freshdried@gmail.com",
+    "url": "http://sean.lee.mx/"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/refactory-ar/virtual-serialport/issues"
+  }
+}
