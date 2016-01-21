@@ -1,6 +1,6 @@
 {
   "name": "virtual-serialport",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A drop-in virtual replacement for node-serialport's SerialPort object",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/refactory-ar/virtual-serialport"
+    "url": "https://github.com/reyiyo/virtual-serialport"
   },
   "keywords": [
     "arduino",
@@ -27,6 +27,6 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/refactory-ar/virtual-serialport/issues"
+    "url": "https://github.com/reyiyo/virtual-serialport/issues"
   }
 }
