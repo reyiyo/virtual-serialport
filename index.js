@@ -21,7 +21,9 @@ util.inherits(VirtualSerialPort, events.EventEmitter);
 
 VirtualSerialPort.prototype.open = function open(callback) {
     this.open = true;
-    this.emit('open');
+    process.nextTick(function() {
+        this.emit('open');
+    }.bind(this));
     if(callback) {
         callback();
     }
@@ -29,7 +31,9 @@ VirtualSerialPort.prototype.open = function open(callback) {
 
 VirtualSerialPort.prototype.write = function write(buffer, callback) {
     if(this.open) {
-        this.emit("dataToDevice", buffer);
+        process.nextTick(function() {
+            this.emit("dataToDevice", buffer);
+        }.bind(this));
     }
     // This callback should receive both an error and result, however result is
     // undocumented so I do not know what it should contain
