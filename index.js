@@ -1,5 +1,6 @@
-var events = require('events');
-var util   = require('util');
+var events     = require('events');
+var util       = require('util');
+var SerialPort = require('serialport');
 
 var VirtualSerialPort = function(path, options, openImmediately, callback) {
     events.EventEmitter.call(this);
@@ -66,5 +67,7 @@ VirtualSerialPort.prototype.close = function close(callback) {
         callback();
     }
 };
+
+VirtualSerialPort.parsers = SerialPort.parsers;
 
 module.exports = VirtualSerialPort;
