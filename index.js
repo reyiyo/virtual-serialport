@@ -68,6 +68,16 @@ VirtualSerialPort.prototype.close = function close(callback) {
     }
 };
 
-VirtualSerialPort.parsers = SerialPort.parsers;
+
+
+if (SerialPort.SerialPort) {
+    // for v2.x serialport API 
+    VirtualSerialPort = { 
+        SerialPort: VirtualSerialPort, 
+        parsers : SerialPort.parsers
+    };
+} else {
+    VirtualSerialPort.parsers = SerialPort.parsers;
+}
 
 module.exports = VirtualSerialPort;

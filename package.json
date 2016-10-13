@@ -30,6 +30,6 @@
     "url": "https://github.com/reyiyo/virtual-serialport/issues"
   },
   "dependencies": {
-    "serialport": "^4.0.3"
+    "serialport": "*"
   }
 }
