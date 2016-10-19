@@ -29,7 +29,7 @@
   "bugs": {
     "url": "https://github.com/reyiyo/virtual-serialport/issues"
   },
-  "dependencies": {
+  "optionalDependencies": {
     "serialport": "*"
   }
 }

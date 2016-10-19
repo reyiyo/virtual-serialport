@@ -1,6 +1,5 @@
-var events     = require('events');
-var util       = require('util');
-var SerialPort = require('serialport');
+var events = require('events');
+var util = require('util');
 
 var VirtualSerialPort = function(path, options, openImmediately, callback) {
     events.EventEmitter.call(this);
@@ -69,15 +68,22 @@ VirtualSerialPort.prototype.close = function close(callback) {
 };
 
 
-
-if (SerialPort.SerialPort) {
-    // for v2.x serialport API 
-    VirtualSerialPort = { 
-        SerialPort: VirtualSerialPort, 
-        parsers : SerialPort.parsers
-    };
-} else {
-    VirtualSerialPort.parsers = SerialPort.parsers;
+try {
+    var SerialPort = require('serialport');
+    if (SerialPort.SerialPort) {
+        // for v2.x serialport API 
+        VirtualSerialPort = {
+            SerialPort: VirtualSerialPort,
+            parsers: SerialPort.parsers
+        };
+    } else {
+        VirtualSerialPort.parsers = SerialPort.parsers;
+    }
 }
+catch(error) {
+    console.warn('VirtualSerialPort - NO parsers available');
+}
+
+
 
 module.exports = VirtualSerialPort;
