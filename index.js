@@ -67,6 +67,9 @@ VirtualSerialPort.prototype.close = function close(callback) {
     }
 };
 
+VirtualSerialPort.prototype.isOpen = function isOpen() {
+    return this.open ? true : false;
+};
 
 try {
     var SerialPort = require('serialport');
