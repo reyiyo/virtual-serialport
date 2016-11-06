@@ -25,7 +25,7 @@ VirtualSerialPort.prototype.open = function open(callback) {
         this.emit('open');
     }.bind(this));
     if(callback) {
-        callback();
+        return callback();
     }
 };
 
@@ -38,7 +38,7 @@ VirtualSerialPort.prototype.write = function write(buffer, callback) {
     // This callback should receive both an error and result, however result is
     // undocumented so I do not know what it should contain
     if(callback) {
-        callback();
+        return callback();
     }
 };
 
@@ -50,20 +50,20 @@ VirtualSerialPort.prototype.resume = function resume() {
 
 VirtualSerialPort.prototype.flush = function flush(callback) {
     if(callback) {
-        callback();
+        return callback();
     }
 };
 
 VirtualSerialPort.prototype.drain = function drain(callback) {
     if(callback) {
-        callback();
+        return callback();
     }
 };
 
 VirtualSerialPort.prototype.close = function close(callback) {
     this.removeAllListeners();
     if(callback) {
-        callback();
+        return callback();
     }
 };
 
@@ -74,7 +74,7 @@ VirtualSerialPort.prototype.isOpen = function isOpen() {
 try {
     var SerialPort = require('serialport');
     if (SerialPort.SerialPort) {
-        // for v2.x serialport API 
+        // for v2.x serialport API
         VirtualSerialPort = {
             SerialPort: VirtualSerialPort,
             parsers: SerialPort.parsers
@@ -86,7 +86,5 @@ try {
 catch(error) {
     console.warn('VirtualSerialPort - NO parsers available');
 }
-
-
 
 module.exports = VirtualSerialPort;

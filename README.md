@@ -72,9 +72,33 @@ sp.write("BLOOP!"); // "Arduino says, BLOOP!"
 
 ### node-serialport methods/events:
 
-#### sp.write(data)
+#### sp.open(callback)
+Simulates the port opening. It returns the callback execution and emits the `open` event on
+`process.nextTick()`
 
 Writes data to the virtual device. Equivalent to `sp.emit("dataToDevice", data)`.
+
+#### sp.write(data)
+Writes data to the virtual device. Equivalent to `sp.emit("dataToDevice", data)`.
+
+#### sp.isOpen()
+Returns boolean indicating wether the port is open or not. It returns the value of `sp.open` which
+you may set manually.
+
+#### sp.pause()
+This method is for API compatibility. It actually does nothing here.
+
+#### sp.resume()
+This method is for API compatibility. It actually does nothing here.
+
+#### sp.flush(callback)
+This method is for API compatibility. It actually does nothing and returns the callback call.
+
+#### sp.drain(callback)
+This method is for API compatibility. It actually does nothing and returns the callback call.
+
+#### sp.close(callback)
+This method is for API compatibility. It actually does nothing and returns the callback call.
 
 #### sp.on("open", function(err) { ... } )
 
@@ -92,6 +116,13 @@ Writes data to computer. Equivalent to `sp.emit("data", data)`
 
 #### sp.on("dataToDevice", function(data) { ... })
 Act on data sent to the device.
+
+## Parsers
+
+`node-serialport` is listed as an optional dependency. If some version of `node-serialport` is
+installed, `virtual-serialport` will load it's parsers.
+
+For more information about parsers, please refer to the specific version of `node-serialport` docs.
 
 ## TODO
 - move to automated testing (assertions and more)
