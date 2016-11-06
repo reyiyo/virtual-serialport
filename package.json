@@ -1,6 +1,6 @@
 {
   "name": "virtual-serialport",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A drop-in virtual replacement for node-serialport's SerialPort object",
   "main": "index.js",
   "directories": {
@@ -30,6 +30,7 @@
     "url": "https://github.com/reyiyo/virtual-serialport/issues"
   },
   "optionalDependencies": {
-    "serialport": "*"
+    "serialport": "*",
+    "semver": "^5.3.0"
   }
 }

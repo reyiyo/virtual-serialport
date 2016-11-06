@@ -42,11 +42,9 @@ VirtualSerialPort.prototype.write = function write(buffer, callback) {
     }
 };
 
-VirtualSerialPort.prototype.pause = function pause() {
-};
+VirtualSerialPort.prototype.pause = function pause() {};
 
-VirtualSerialPort.prototype.resume = function resume() {
-};
+VirtualSerialPort.prototype.resume = function resume() {};
 
 VirtualSerialPort.prototype.flush = function flush(callback) {
     if(callback) {
@@ -71,20 +69,26 @@ VirtualSerialPort.prototype.isOpen = function isOpen() {
     return this.open ? true : false;
 };
 
-try {
-    var SerialPort = require('serialport');
-    if (SerialPort.SerialPort) {
+function VirtualSerialPortFactory() {
+    try {
+        var SerialPort = require('serialport');
+        var serialportPackage = require('serialport/package.json');
+        var semver = require('semver');
+
         // for v2.x serialport API
-        VirtualSerialPort = {
-            SerialPort: VirtualSerialPort,
-            parsers: SerialPort.parsers
-        };
-    } else {
-        VirtualSerialPort.parsers = SerialPort.parsers;
+        if(semver.satisfies(serialportPackage.version, '<3.X')) {
+            this.SerialPort = VirtualSerialPort;
+            this.parsers = SerialPort.parsers;
+            return this;
+        }
+
+        VirtualSerialPort.prototype.parsers = SerialPort.parsers;
+        return VirtualSerialPort;
+    } catch (error) {
+        console.warn('VirtualSerialPort - NO parsers available');
     }
-}
-catch(error) {
-    console.warn('VirtualSerialPort - NO parsers available');
+
+    return VirtualSerialPort;
 }
 
-module.exports = VirtualSerialPort;
+module.exports = new VirtualSerialPortFactory();
