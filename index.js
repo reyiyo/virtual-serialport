@@ -1,3 +1,5 @@
+'use strict';
+
 var events = require('events');
 var util = require('util');
 
@@ -7,10 +9,10 @@ var VirtualSerialPort = function(path, options, openImmediately, callback) {
     var self = this;
 
     this.writeToComputer = function(data) {
-        self.emit("data", data);
+        self.emit('data', data);
     };
 
-    if(openImmediately || openImmediately === undefined || openImmediately === null) {
+    if(openImmediately || typeof openImmediately === 'undefined' || openImmediately === null) {
         process.nextTick(function() {
             self.open(callback);
         });
@@ -20,17 +22,18 @@ var VirtualSerialPort = function(path, options, openImmediately, callback) {
 util.inherits(VirtualSerialPort, events.EventEmitter);
 
 VirtualSerialPort.prototype.open = function open(callback) {
-    this.open = true;
+    this.opened = true;
     process.nextTick(function() {
         this.emit('open');
     }.bind(this));
+
     if(callback) {
         return callback();
     }
 };
 
 VirtualSerialPort.prototype.write = function write(buffer, callback) {
-    if(this.open) {
+    if(this.opened) {
         process.nextTick(function() {
             this.emit("dataToDevice", buffer);
         }.bind(this));
@@ -60,13 +63,14 @@ VirtualSerialPort.prototype.drain = function drain(callback) {
 
 VirtualSerialPort.prototype.close = function close(callback) {
     this.removeAllListeners();
+    this.opened = false;
     if(callback) {
         return callback();
     }
 };
 
 VirtualSerialPort.prototype.isOpen = function isOpen() {
-    return this.open ? true : false;
+    return this.opened;
 };
 
 function VirtualSerialPortFactory() {
@@ -82,7 +86,7 @@ function VirtualSerialPortFactory() {
             return this;
         }
 
-        VirtualSerialPort.prototype.parsers = SerialPort.parsers;
+        VirtualSerialPort.parsers = SerialPort.parsers;
         return VirtualSerialPort;
     } catch (error) {
         console.warn('VirtualSerialPort - NO parsers available');
