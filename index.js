@@ -8,6 +8,7 @@ var VirtualSerialPort = function(path, options, openImmediately, callback) {
 
     var self = this;
 
+    this.opened = false;
     this.writeToComputer = function(data) {
         self.emit('data', data);
     };
