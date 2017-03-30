@@ -13,7 +13,7 @@ var VirtualSerialPort = function(path, options, openImmediately, callback) {
         self.emit('data', data);
     };
 
-    if(openImmediately || typeof openImmediately === 'undefined' || openImmediately === null) {
+    if((openImmediately || typeof openImmediately === 'undefined' || openImmediately === null) && (options.autoOpen || typeof options.autoOpen === 'undefined' || options.autoOpen === null)) {
         process.nextTick(function() {
             self.open(callback);
         });
@@ -63,8 +63,19 @@ VirtualSerialPort.prototype.drain = function drain(callback) {
 };
 
 VirtualSerialPort.prototype.close = function close(callback) {
-    this.removeAllListeners();
+    //this.removeAllListeners();
     this.opened = false;
+
+    process.nextTick(function() {
+        this.emit('close');
+    }.bind(this));
+
+    if(callback) {
+        return callback();
+    }
+};
+
+VirtualSerialPort.prototype.update = function update(options, callback) {
     if(callback) {
         return callback();
     }
