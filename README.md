@@ -64,7 +64,7 @@ sp.writeToComputer("BLEEP!"); // "Computer says, BLEEP!"
 
 ```javascript
 sp.on("dataToDevice", function(data) {
-	console.log("Arduino says, " + data):
+	console.log("Arduino says, " + data);
 });
 
 sp.write("BLOOP!"); // "Arduino says, BLOOP!"
