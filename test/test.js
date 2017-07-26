@@ -1,6 +1,8 @@
 var VirtualSerialPort = require('../');
 
-var sp = new VirtualSerialPort('/dev/null');
+var sp = new VirtualSerialPort('/dev/null', {
+  autoOpen: false
+});
 
 // Simple echo function for fake Arduino
 sp.on('dataToDevice', function(data) {
@@ -28,4 +30,8 @@ sp.on('open', function() {
     sp.on("data", function(data) {
         console.log("Computer: " + (data == 1 ? "BLEEP" : "BLOOP"));
     });
+});
+
+sp.open(function() {
+  console.log("Open callback!");
 });
