@@ -15,8 +15,7 @@ var VirtualSerialPort = function(path, options, callback) {
         self.emit('data', data);
     };
 
-
-    if(options.autoOpen !== false) {
+    if (options.autoOpen !== false) {
         process.nextTick(function() {
             self.open(callback);
         });
@@ -28,24 +27,28 @@ util.inherits(VirtualSerialPort, events.EventEmitter);
 VirtualSerialPort.prototype.open = function open(callback) {
     this.opened = true;
 
-    process.nextTick(function() {
-        this.emit('open');
-    }.bind(this));
+    process.nextTick(
+        function() {
+            this.emit('open');
+        }.bind(this)
+    );
 
-    if(callback) {
+    if (callback) {
         return callback();
     }
 };
 
 VirtualSerialPort.prototype.write = function write(buffer, callback) {
-    if(this.opened) {
-        process.nextTick(function() {
-            this.emit("dataToDevice", buffer);
-        }.bind(this));
+    if (this.opened) {
+        process.nextTick(
+            function() {
+                this.emit('dataToDevice', buffer);
+            }.bind(this)
+        );
     }
     // This callback should receive both an error and result, however result is
     // undocumented so I do not know what it should contain
-    if(callback) {
+    if (callback) {
         return callback();
     }
 };
@@ -55,13 +58,13 @@ VirtualSerialPort.prototype.pause = function pause() {};
 VirtualSerialPort.prototype.resume = function resume() {};
 
 VirtualSerialPort.prototype.flush = function flush(callback) {
-    if(callback) {
+    if (callback) {
         return callback();
     }
 };
 
 VirtualSerialPort.prototype.drain = function drain(callback) {
-    if(callback) {
+    if (callback) {
         return callback();
     }
 };
@@ -69,17 +72,19 @@ VirtualSerialPort.prototype.drain = function drain(callback) {
 VirtualSerialPort.prototype.close = function close(callback) {
     this.opened = false;
 
-    process.nextTick(function() {
-        this.emit('close');
-    }.bind(this));
+    process.nextTick(
+        function() {
+            this.emit('close');
+        }.bind(this)
+    );
 
-    if(callback) {
+    if (callback) {
         return callback();
     }
 };
 
 VirtualSerialPort.prototype.update = function update(options, callback) {
-    if(callback) {
+    if (callback) {
         return callback();
     }
 };
@@ -95,7 +100,7 @@ function VirtualSerialPortFactory() {
         var semver = require('semver');
 
         // for v2.x serialport API
-        if(semver.satisfies(serialportPackage.version, '<3.X')) {
+        if (semver.satisfies(serialportPackage.version, '<3.X')) {
             this.SerialPort = VirtualSerialPort;
             this.parsers = SerialPort.parsers;
             return this;

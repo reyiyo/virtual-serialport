@@ -1,6 +1,6 @@
 {
   "name": "virtual-serialport",
-  "version": "0.3.3",
+  "version": "4.0.0",
   "description": "A drop-in virtual replacement for node-serialport's SerialPort object",
   "main": "index.js",
   "directories": {
@@ -21,16 +21,43 @@
     "serialport"
   ],
   "author": {
-    "name": "Sean Lee",
-    "email": "freshdried@gmail.com",
-    "url": "http://sean.lee.mx/"
+    "name": "Sergio Orbe",
+    "email": "reyiyo@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Rocco Musolino",
+      "url": "https://twitter.com/roccomuso"
+    },
+    {
+      "name": "Matias De Carli",
+      "email": "matiasdecarli@gmail.com",
+      "url": "http://www.matiasdecarli.com"
+    },
+    {
+      "name": "Ingo Fischer"
+    },
+    {
+      "name": "Morgan 'ARR!' Allen"
+    },
+    {
+      "name": "luzlab"
+    },
+    {
+      "name": "Kyle Machulis",
+      "email": "kyle@machul.is",
+      "url": "http://kyle.machul.is"
+    },
+    {
+      "name": "ecksun"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/reyiyo/virtual-serialport/issues"
   },
   "optionalDependencies": {
-    "serialport": "*",
+    "serialport": "^4.0.7",
     "semver": "^5.3.0"
   }
 }
