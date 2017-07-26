@@ -3,17 +3,20 @@
 var events = require('events');
 var util = require('util');
 
-var VirtualSerialPort = function(path, options, openImmediately, callback) {
+var VirtualSerialPort = function(path, options, callback) {
     events.EventEmitter.call(this);
 
     var self = this;
+
+    this.options = options;
 
     this.opened = false;
     this.writeToComputer = function(data) {
         self.emit('data', data);
     };
 
-    if((openImmediately || typeof openImmediately === 'undefined' || openImmediately === null) && (options.autoOpen || typeof options.autoOpen === 'undefined' || options.autoOpen === null)) {
+
+    if(options.autoOpen !== false) {
         process.nextTick(function() {
             self.open(callback);
         });
@@ -24,6 +27,7 @@ util.inherits(VirtualSerialPort, events.EventEmitter);
 
 VirtualSerialPort.prototype.open = function open(callback) {
     this.opened = true;
+
     process.nextTick(function() {
         this.emit('open');
     }.bind(this));
@@ -63,7 +67,6 @@ VirtualSerialPort.prototype.drain = function drain(callback) {
 };
 
 VirtualSerialPort.prototype.close = function close(callback) {
-    //this.removeAllListeners();
     this.opened = false;
 
     process.nextTick(function() {
