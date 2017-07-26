@@ -8,11 +8,21 @@ sp.on('dataToDevice', function(data) {
     sp.writeToComputer(data ^ 1);
 });
 
+sp.on('close', function() {
+    console.log("Got close event");
+});
+
 sp.on('open', function() {
     console.log("Initialized virtual serial port!");
 
-    setInterval(function() {
+    var i = 3;
+    var t = setInterval(function() {
         sp.write(Math.floor(Math.random() * 2));
+
+        if(--i === 0) {
+          sp.close();
+          clearInterval(t);
+        }
     }, 1000);
 
     sp.on("data", function(data) {

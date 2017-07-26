@@ -63,8 +63,9 @@ VirtualSerialPort.prototype.drain = function drain(callback) {
 };
 
 VirtualSerialPort.prototype.close = function close(callback) {
-    this.removeAllListeners();
+    this.emit('close');
     this.opened = false;
+
     if(callback) {
         return callback();
     }
