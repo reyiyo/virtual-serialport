@@ -1,14 +1,12 @@
-# About this repo
-
-This is an exact copy of the last code in https://github.com/freshdried/virtual-serialport.git, which is now deleted and we don't know why.
-We made this copy and also published the npm package because we were using this module in several projects.
-
-
 # virtual-serialport
 
 Do you use [node-serialport](https://github.com/voodootikigod/node-serialport), but don't have your device connected for development or testing?
 
 virtual-serialport provides a virtual drop-in replacement for an actual SerialPort object.
+
+## Compatibility notes
+
+We'll try to keep up to date with the latest `node-serialport` stable version. For compatibility with older versions of `node-serialport` you can install an older version of this library.
 
 ## Examples
 

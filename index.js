@@ -96,16 +96,6 @@ VirtualSerialPort.prototype.isOpen = function isOpen() {
 function VirtualSerialPortFactory() {
     try {
         var SerialPort = require('serialport');
-        var serialportPackage = require('serialport/package.json');
-        var semver = require('semver');
-
-        // for v2.x serialport API
-        if (semver.satisfies(serialportPackage.version, '<3.X')) {
-            this.SerialPort = VirtualSerialPort;
-            this.parsers = SerialPort.parsers;
-            return this;
-        }
-
         VirtualSerialPort.parsers = SerialPort.parsers;
         return VirtualSerialPort;
     } catch (error) {
