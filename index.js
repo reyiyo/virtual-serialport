@@ -24,7 +24,23 @@ var VirtualSerialPort = function(path, options, callback) {
 
 util.inherits(VirtualSerialPort, events.EventEmitter);
 
+VirtualSerialPort.prototype._error = function(error, callback) {
+    if (callback) {
+        callback.call(this, error);
+    } else {
+        this.emit('error', error);
+    }
+};
+
+VirtualSerialPort.prototype._asyncError = function(error, callback) {
+    process.nextTick(function() { this._error(error, callback); }.bind(this));
+};
+
 VirtualSerialPort.prototype.open = function open(callback) {
+    if (this.opened) {
+        return this._asyncError(new Error('Port is already open'));
+    }
+    
     this.opened = true;
 
     process.nextTick(

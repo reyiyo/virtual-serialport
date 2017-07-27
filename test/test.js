@@ -32,6 +32,16 @@ sp.on('open', function() {
     });
 });
 
+sp.on('error', function(err) {
+    if(err.message === 'Port is already open') {
+      console.log('Got expected error')
+    }
+});
+
 sp.open(function() {
     console.log('Open callback!');
+});
+
+sp.open(function() {
+    console.log('Open callback #2 - should\'ve never been called!');
 });
