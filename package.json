@@ -1,6 +1,6 @@
 {
   "name": "virtual-serialport",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A drop-in virtual replacement for node-serialport's SerialPort object",
   "main": "index.js",
   "directories": {
@@ -50,6 +50,10 @@
     },
     {
       "name": "ecksun"
+    },
+    {
+      "name": "Maxim Rubis",
+      "url": "http://rub.is"
     }
   ],
   "license": "MIT",
