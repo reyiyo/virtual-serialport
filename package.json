@@ -61,7 +61,7 @@
     "url": "https://github.com/reyiyo/virtual-serialport/issues"
   },
   "optionalDependencies": {
-    "serialport": "^4.0.7",
+    "serialport": "5.0.0",
     "semver": "^5.3.0"
   }
 }
