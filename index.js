@@ -15,7 +15,7 @@ var VirtualSerialPort = function(path, options, callback) {
         self.emit('data', data);
     };
 
-    if (options.autoOpen !== false) {
+    if (options && options.autoOpen !== false) {
         process.nextTick(function() {
             self.open(callback);
         });
@@ -40,7 +40,7 @@ VirtualSerialPort.prototype.open = function open(callback) {
     if (this.opened) {
         return this._asyncError(new Error('Port is already open'));
     }
-    
+
     this.opened = true;
 
     process.nextTick(
@@ -94,6 +94,12 @@ VirtualSerialPort.prototype.close = function close(callback) {
         }.bind(this)
     );
 
+    if (callback) {
+        return callback();
+    }
+};
+
+VirtualSerialPort.prototype.pipe = function pipe(options, callback) {
     if (callback) {
         return callback();
     }
