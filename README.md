@@ -74,23 +74,21 @@ sp.write("BLOOP!"); // "Arduino says, BLOOP!"
 Simulates the port opening. It returns the callback execution and emits the `open` event on
 `process.nextTick()`
 
-Writes data to the virtual device. Equivalent to `sp.emit("dataToDevice", data)`.
-
 #### sp.write(data)
 Writes data to the virtual device. Equivalent to `sp.emit("dataToDevice", data)`.
 
-#### sp.isOpen()
+#### sp.isOpen() OR sp.isOpen (both supported)
 Returns boolean indicating wether the port is open or not. It returns the value of `sp.open` which
 you may set manually.
 
 #### sp.pause()
-This method is for API compatibility. It actually does nothing here.
+Sets internal Pause status and make sure all data send by "writeToComputer" is stored for later delivery
 
 #### sp.resume()
-This method is for API compatibility. It actually does nothing here.
+Release internal Pause status and send out all data that was stored during pause.
 
 #### sp.flush(callback)
-This method is for API compatibility. It actually does nothing and returns the callback call.
+Cleans all stored data that may be stored during pause
 
 #### sp.drain(callback)
 This method is for API compatibility. It actually does nothing and returns the callback call.
@@ -111,6 +109,7 @@ Act on data sent to the computer, as you would with an actual `SerialPort` insta
 #### sp.writeToComputer(data);
 
 Writes data to computer. Equivalent to `sp.emit("data", data)`
+Outputs warning and do not write the if port was not opened before.
 
 #### sp.on("dataToDevice", function(data) { ... })
 Act on data sent to the device.

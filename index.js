@@ -1,3 +1,7 @@
+/* jshint -W097 */
+// jshint strict:false
+/*jslint node: true */
+
 'use strict';
 
 var events = require('events');
@@ -10,9 +14,19 @@ var VirtualSerialPort = function(path, options, callback) {
 
     this.options = options;
 
-    this.opened = false;
+    this.isOpen = false;
+    this.paused = false;
+    this.delayedData = [];
     this.writeToComputer = function(data) {
+        if (self.paused) {
+            self.delayedData.push(data);
+        }
+        else if (!this.isOpen) {
+            console.warn('VirtualSerialPort - Discard data write because port not isOpen');
+        }
+        else {
         self.emit('data', data);
+        }
     };
 
     if (options && options.autoOpen !== false) {
@@ -37,11 +51,11 @@ VirtualSerialPort.prototype._asyncError = function(error, callback) {
 };
 
 VirtualSerialPort.prototype.open = function open(callback) {
-    if (this.opened) {
+    if (this.isOpen) {
         return this._asyncError(new Error('Port is already open'));
     }
 
-    this.opened = true;
+    this.isOpen = true;
 
     process.nextTick(
         function() {
@@ -55,7 +69,7 @@ VirtualSerialPort.prototype.open = function open(callback) {
 };
 
 VirtualSerialPort.prototype.write = function write(buffer, callback) {
-    if (this.opened) {
+    if (this.isOpen) {
         process.nextTick(
             function() {
                 this.emit('dataToDevice', buffer);
@@ -69,11 +83,25 @@ VirtualSerialPort.prototype.write = function write(buffer, callback) {
     }
 };
 
-VirtualSerialPort.prototype.pause = function pause() {};
+VirtualSerialPort.prototype.pause = function pause() {
+    this.paused = true;
+};
 
-VirtualSerialPort.prototype.resume = function resume() {};
+VirtualSerialPort.prototype.resume = function resume() {
+    this.paused = false;
+
+    var self = this;
+    function sendDelayedData() {
+        if (self.delayedData.length === 0 || self.paused) return;
+        var data = self.delayedData.shift();
+        self.writeToComputer(data);
+        setTimeout(sendDelayedData, 0);
+    }
+    sendDelayedData();
+};
 
 VirtualSerialPort.prototype.flush = function flush(callback) {
+    this.delayedData = [];
     if (callback) {
         return callback();
     }
@@ -86,7 +114,7 @@ VirtualSerialPort.prototype.drain = function drain(callback) {
 };
 
 VirtualSerialPort.prototype.close = function close(callback) {
-    this.opened = false;
+    this.isOpen = false;
 
     process.nextTick(
         function() {
@@ -112,7 +140,7 @@ VirtualSerialPort.prototype.update = function update(options, callback) {
 };
 
 VirtualSerialPort.prototype.isOpen = function isOpen() {
-    return this.opened;
+    return this.isOpen;
 };
 
 function VirtualSerialPortFactory() {
