@@ -3,6 +3,8 @@
 var events = require('events');
 var util = require('util');
 
+let dataToRead = null;
+
 var VirtualSerialPort = function(path, options, callback) {
     events.EventEmitter.call(this);
 
@@ -13,6 +15,8 @@ var VirtualSerialPort = function(path, options, callback) {
     this.opened = false;
     this.writeToComputer = function(data) {
         self.emit('data', data);
+        dataToRead = data;
+        self.emit('readable');
     };
 
     if (options && options.autoOpen !== false) {
@@ -67,6 +71,10 @@ VirtualSerialPort.prototype.write = function write(buffer, callback) {
     if (callback) {
         return callback();
     }
+};
+
+VirtualSerialPort.prototype.read = function read() {
+    return dataToRead;
 };
 
 VirtualSerialPort.prototype.pause = function pause() {};

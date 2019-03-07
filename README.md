@@ -79,6 +79,9 @@ Writes data to the virtual device. Equivalent to `sp.emit("dataToDevice", data)`
 #### sp.write(data)
 Writes data to the virtual device. Equivalent to `sp.emit("dataToDevice", data)`.
 
+#### sp.read()
+Reads data from the virtual device. (The last data written by  `sp.writeToComputer(data)`).
+
 #### sp.isOpen()
 Returns boolean indicating wether the port is open or not. It returns the value of `sp.open` which
 you may set manually.
@@ -106,11 +109,15 @@ Runs function once `SerialPort` is ready, as you would with an actual `SerialPor
 
 Act on data sent to the computer, as you would with an actual `SerialPort` instance.
 
+#### sp.on("readable", function() { ... })
+
+Act on when readable data ready to be read by the computer, as you would with an actual `SerialPort` instance.
+
 ### Non node-serialport methods/events:
 
 #### sp.writeToComputer(data);
 
-Writes data to computer. Equivalent to `sp.emit("data", data)`
+Writes data to computer. Equivalent to `sp.emit("data", data) and sp.emit("readable")` Also set data next read by sp.read()
 
 #### sp.on("dataToDevice", function(data) { ... })
 Act on data sent to the device.
