@@ -7,7 +7,7 @@
 var events = require('events');
 var util = require('util');
 
-var VirtualSerialPort = function(path, options, callback) {
+var VirtualSerialPort = function(options, callback) {
     events.EventEmitter.call(this);
 
     var self = this;
