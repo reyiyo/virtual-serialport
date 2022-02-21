@@ -146,13 +146,17 @@ VirtualSerialPort.prototype.isOpen = function isOpen() {
 function VirtualSerialPortFactory() {
     try {
         var SerialPort = require('serialport');
+        if (SerialPort.SerialPort) SerialPort = SerialPort.SerialPort;
         VirtualSerialPort.parsers = SerialPort.parsers;
+        
         return VirtualSerialPort;
     } catch (error) {
         console.warn('VirtualSerialPort - NO parsers available');
     }
 
-    return VirtualSerialPort;
+    return {
+        Serialport: VirtualSerialPort
+    }
 }
 
 module.exports = new VirtualSerialPortFactory();
